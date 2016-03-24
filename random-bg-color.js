@@ -9,18 +9,19 @@
 
     function init(colors, targetElements) {
         this.colors = colors || [];
-        this.targetElements = targetElements || [];
+        this.targetElements = targetElements || '';
     }
 
     init.prototype.colors = function(colors) {
-        this.colors = colors;
+        return this.colors = colors;
     };
 
     init.prototype.targetElements = function(targetElements) {
-        this.targetElements = targetElements;
+        return this.targetElements = targetElements;
     }
     init.prototype.apply = function() {
-
+        var color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        doc.getElementById(this.targetElements).style.backgroundColor = color;
     };
 
     win.bgColors = (typeof(win.bgColors) === "undefined") ? new init() : 'bgColors is already defined';
