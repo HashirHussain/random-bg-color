@@ -9,12 +9,18 @@
 
     function init() {
         var bgColors = {};
-        bgColors.name = 'name called';
+        /**
+         * [targetElements if length is 0 then backgroun color will applied to Body. Therefore it is must to pass at least one value]
+         * @type {Array}
+         */
+        bgColors.targetElements = bgColors.targetElements || [];
+        /**
+         * [colors if length is 0 then resultant background colors will be random]
+         * @type {Array}
+         */
+        bgColors.colors = bgColors.colors || [];
         return bgColors;
     }
 
     win.bgColors = (typeof(bgColors) === "undefined") ? init() : 'bgColors is already defined';
-    // if(typeof(bg-colors)===undefined){
-    // 	win.bg-colors = init();
-    // }
 })(window, document);
