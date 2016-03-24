@@ -7,32 +7,21 @@
 (function(win, doc) {
     'use strict';
 
-    function bgColor() {
-        this.colors = [];
-        this.targetElements = [];
+    function init(colors, targetElements) {
+        this.colors = colors || [];
+        this.targetElements = targetElements || [];
     }
 
-    bgColor.prototype.colors = function(colors) {
+    init.prototype.colors = function(colors) {
         this.colors = colors;
     };
 
-    bgColor.prototype.targetElements = function(targetElements) {
+    init.prototype.targetElements = function(targetElements) {
         this.targetElements = targetElements;
     }
+    init.prototype.apply = function() {
 
-    function init() {
-        var bgColors = {};
-        /**
-         * [targetElements if length is 0 then backgroun color will applied to Body. Therefore it is must to pass at least one value]
-         * @type {Array}
-         */
-        bgColors.targetElements = bgColors.targetElements || '';
-        /**
-         * [colors if length is 0 then resultant background colors will be random]
-         * @type {Array}
-         */
-        bgColors.colors = bgColors.colors || [];
-        return bgColors;
-    }
-    win.bgColors = (typeof(bgColors) === "undefined") ? init() : 'bgColors is already defined';
+    };
+
+    win.bgColors = (typeof(win.bgColors) === "undefined") ? new init() : 'bgColors is already defined';
 })(window, document);
