@@ -55,33 +55,38 @@
                 this.targetElements = ['body'];
                 break;
         }
-        if (this.colors) {
-            color = this.colors[Math.floor(Math.random() * this.colors.length)];
-            for (var j = 0; j < this.targetElements.length; j++) {
-                if (this.targetElements[j].charAt(0) === '.') {
-                    doc.getElementsByClassName(this.targetElements[j].slice(1)).style.background = color;
-                } else if (this.targetElements[j].charAt(0) === '#') {
-                    doc.getElementById(this.targetElements[j].slice(1)).style.background = color;
-                } else {
-                    var elem = document.getElementsByTagName(this.targetElements[j]);
-                    for (var e = 0; e < elem.length; e++) {
-                        elem[e].style.background = color;
-                    }
-                }
+        if (!this.colors || this.colors.length < 0) {
+            var c = '';
+            while (c.length < 6) {
+                c += (Math.random()).toString(16).substr(-6).substr(-1);
             }
+            color = this.colors = '#' + c;
         } else {
-            color = makeRandomColor();
-            doc.getElementById(this.targetElements[0]).style.background = color;
+            color = this.colors[Math.floor(Math.random() * this.colors.length)];
         }
+        applyColor(color, this.targetElements);
         return;
     };
 
-    function makeRandomColor() {
-        var c = '';
-        while (c.length < 6) {
-            c += (Math.random()).toString(16).substr(-6).substr(-1);
+    function applyColor(currentColor, targetElements) {
+        var elem = null;
+        var e = 0;
+        for (var j = 0; j < targetElements.length; j++) {
+            if (targetElements[j].charAt(0) === '.') {
+                elem = document.getElementsByClassName(targetElements[j].slice(1));
+                for (; e < elem.length; e++) {
+                    elem[e].style.background = currentColor;
+                }
+                doc.getElementsByClassName(targetElements[j].slice(1)).style.background = currentColor;
+            } else if (targetElements[j].charAt(0) === '#') {
+                doc.getElementById(targetElements[j].slice(1)).style.background = currentColor;
+            } else {
+                elem = document.getElementsByTagName(targetElements[j]);
+                for (; e < elem.length; e++) {
+                    elem[e].style.background = currentColor;
+                }
+            }
         }
-        return '#' + c;
     }
     win.bgColors = (typeof(win.bgColors) === "undefined") ? new init() : 'bgColors is already defined';
 })(window, document);
