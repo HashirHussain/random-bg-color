@@ -27,13 +27,51 @@
      */
     init.prototype.apply = function() {
         var color = null;
+        var elementType = [];
+        /*check if targetElements are given*/
+        switch (typeof this.targetElements) {
+            case 'string':
+                if (this.targetElements.charAt(0) === '.') {
+                    elementType[0] = 'class';
+                } else if (this.targetElements.charAt(0) === '#') {
+                    elementType[0] = 'id';
+                } else {
+                    elementType[0] = 'tag';
+                }
+                this.targetElements = [this.targetElements];
+                break;
+            case 'object':
+                if (this.targetElements === null) {
+                    elementType[0] = 'tag';
+                    this.targetElements = ['body'];
+                }
+                break;
+            case '':
+            case 'null':
+            case 'undefined':
+            case undefined:
+            case null:
+                elementType[0] = 'tag';
+                this.targetElements = ['body'];
+                break;
+        }
         if (this.colors) {
             color = this.colors[Math.floor(Math.random() * this.colors.length)];
-            doc.getElementById(this.targetElements).style.background = color;
+            for (var j = 0; j < this.targetElements.length; j++) {
+                if (this.targetElements[j].charAt(0) === '.') {
+                    doc.getElementsByClassName(this.targetElements[j].slice(1)).style.background = color;
+                } else if (this.targetElements[j].charAt(0) === '#') {
+                    doc.getElementById(this.targetElements[j].slice(1)).style.background = color;
+                } else {
+                    var elem = document.getElementsByTagName(this.targetElements[j]);
+                    for (var e = 0; e < elem.length; e++) {
+                        elem[e].style.background = color;
+                    }
+                }
+            }
         } else {
             color = makeRandomColor();
-            console.log('inside array', color);
-            doc.getElementById(this.targetElements).style.background = color;
+            doc.getElementById(this.targetElements[0]).style.background = color;
         }
         return;
     };
