@@ -72,12 +72,13 @@
         var elem = null;
         var e = 0;
         for (var j = 0; j < targetElements.length; j++) {
+            e = 0;
             if (targetElements[j].charAt(0) === '.') {
                 elem = document.getElementsByClassName(targetElements[j].slice(1));
                 for (; e < elem.length; e++) {
                     elem[e].style.background = currentColor;
                 }
-                doc.getElementsByClassName(targetElements[j].slice(1)).style.background = currentColor;
+                // doc.getElementsByClassName('ul').style.background = currentColor;
             } else if (targetElements[j].charAt(0) === '#') {
                 doc.getElementById(targetElements[j].slice(1)).style.background = currentColor;
             } else {
