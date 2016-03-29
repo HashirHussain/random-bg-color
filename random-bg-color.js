@@ -3,7 +3,6 @@
  * (c) 2016 Hashir Hussain
  * License: MIT
  */
-
 (function(win, doc) {
     'use strict';
     /**
@@ -21,28 +20,33 @@
      * @type {null}
      */
     init.prototype.targetElements = null;
+
+    /**
+     * [targetElements if set true colors would autochage after particular interval]
+     * @type {Boolean}
+     */
+    init.prototype.autoChange = false;
+    /**
+     * [targetElements if autoChange set true colors would autochage after particular delay]
+     * @type {Number}
+     * @Default 10000
+     */
+    init.prototype.autoChangeDelay = 1000;
+
     /**
      * [apply Apply colors to target elements]
      * @return {undefined} []
      */
     init.prototype.apply = function() {
         var color = null;
-        var elementType = [];
+
         /*check if targetElements are given*/
         switch (typeof this.targetElements) {
             case 'string':
-                if (this.targetElements.charAt(0) === '.') {
-                    elementType[0] = 'class';
-                } else if (this.targetElements.charAt(0) === '#') {
-                    elementType[0] = 'id';
-                } else {
-                    elementType[0] = 'tag';
-                }
-                this.targetElements = [this.targetElements];
+                this.targetElements = this.targetElements ? [this.targetElements] : ['body'];
                 break;
             case 'object':
-                if (this.targetElements === null) {
-                    elementType[0] = 'tag';
+                if (this.targetElements === null || this.targetElements.length === 0) {
                     this.targetElements = ['body'];
                 }
                 break;
@@ -51,20 +55,34 @@
             case 'undefined':
             case undefined:
             case null:
-                elementType[0] = 'tag';
                 this.targetElements = ['body'];
                 break;
         }
-        if (!this.colors || this.colors.length < 0) {
-            var c = '';
-            while (c.length < 6) {
-                c += (Math.random()).toString(16).substr(-6).substr(-1);
-            }
-            color = this.colors = '#' + c;
+        switch (typeof this.colors) {
+            case 'string':
+                this.colors = this.colors ? [this.colors] : null;
+                break;
+            case 'object':
+                if (this.colors === null || this.colors.length < 0) {
+                    var c = '';
+                    while (c.length < 6) {
+                        c += (Math.random()).toString(16).substr(-6).substr(-1);
+                    }
+                    this.colors = ['#' + c];
+                }
+                break;
+        }
+        if (this.autoChange) {
+            var self = this;
+            setInterval(function() {
+                color = self.colors[Math.floor(Math.random() * self.colors.length)];
+                applyColor(color, self.targetElements);
+            }, self.autoChangeDelay);
         } else {
             color = this.colors[Math.floor(Math.random() * this.colors.length)];
+            applyColor(color, this.targetElements);
         }
-        applyColor(color, this.targetElements);
+
         return;
     };
 
@@ -78,7 +96,6 @@
                 for (; e < elem.length; e++) {
                     elem[e].style.background = currentColor;
                 }
-                // doc.getElementsByClassName('ul').style.background = currentColor;
             } else if (targetElements[j].charAt(0) === '#') {
                 doc.getElementById(targetElements[j].slice(1)).style.background = currentColor;
             } else {
