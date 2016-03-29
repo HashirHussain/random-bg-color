@@ -28,7 +28,7 @@ bgColors.targetElements = ['#myId','.myClass','.anotherClass','span'];
 ```
 
 
-You can also pass list of colors to be choose from
+You can also pass selected list of colors
 e.g.
 
 - Multiple colors 
@@ -41,7 +41,7 @@ bgColors.colors = '#1abc9c' or bgColors.colors = ['#1abc9c'];
 ```
 
 ##### More options
-- If you want change colors without page reload set `bgColors.autoChange` value `true`.
+- If you want to change colors without page reload set `bgColors.autoChange` value `true`.
 e.g. 
 ```javascript 
 bgColors.autoChange=true
@@ -49,12 +49,13 @@ bgColors.autoChange=true
 - You can set interval (in miliseconds) if you has set `autoChange true`.
 e.g. 
 ```javascript
-bgColors.autoChangeDelay = 2000;// Only works if autoChange is true`. 
+bgColors.autoChangeDelay = 2000;// Only works if autoChange is true. 
 ``` 
 
 ### Combining all along 
 ```javascript
-<script type="text/javascript">bgColors.targetElements = ['.t1','#g1','div'];
+<script type="text/javascript">
+bgColors.targetElements = ['.t1','#g1','div'];
 bgColors.colors = ['#1abc9c', '#d3d3d3'];
 bgColors.apply();</script>
 ```
