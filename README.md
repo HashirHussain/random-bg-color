@@ -62,6 +62,8 @@ bgColors.colors = ['#1abc9c', '#d3d3d3'];
 bgColors.apply();</script>
 ```
 
+##### Live Demo :[fiddle] (https://jsfiddle.net/hashir/8nLzd0xo/)
+
 ##### Stay tuned for more options ;)
 
 
