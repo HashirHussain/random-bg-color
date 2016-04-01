@@ -1,5 +1,5 @@
 /**
- * Random-bg-color v1.0.0S
+ * Random-bg-color v1.0.0
  * (c) 2016 Hashir Hussain
  * License: MIT
  */
