@@ -4,6 +4,8 @@ Play with background colors on any HTML elements.
 - Include 
 ```javascript 
 <script src="path/to/your/directory/random-bg-color.js">
+OR
+<script src="path/to/your/directory/random-bg-color.min.js">
 ```
 - Put 
 ```javascript 
